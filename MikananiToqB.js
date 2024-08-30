@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AAM的qb扩展脚本
 // @namespace    http://tampermonkey.net/
-// @version      0.5.1
+// @version      0.5.2
 // @description  I want sleep I sole want sleep a nd I like sleep
 // @author       github/Abcuders
 // @supportURL   https://github.com/Abcuders/AutoAnimeMv
@@ -89,7 +89,7 @@ function updata(AnimeName){
         //formData.append('upLimit', 'NaN');
         GM_xmlhttpRequest({
             method: 'post',
-            url: `http://${GM_getValue('address')}/api/v2/torrents/add`,
+            url: `${GM_getValue('address')}/api/v2/torrents/add`,
             data: formData,
             onload: function(rec) {
                 console.log(rec);
@@ -97,7 +97,7 @@ function updata(AnimeName){
                     if (rec.response == 'Forbidden'){
                        GM_xmlhttpRequest({
                            method: 'post',
-                           url: `http://${GM_getValue('address')}/api/v2/auth/login`,
+                           url: `${GM_getValue('address')}/api/v2/auth/login`,
                            data: `username=${GM_getValue('username')}&password=${GM_getValue('password')}`,
                            headers: {"Content-Type": "application/x-www-form-urlencoded"},
                            onload: function(rec) {
@@ -115,7 +115,7 @@ function updata(AnimeName){
             },
             timeout:5000,
             ontimeout: function(){
-                $.slert('连接超时');
+                $.alert('连接超时');
             }
         });
     }
@@ -133,7 +133,7 @@ function OpenConfig(){
         '<form action="" class="formName">' +
         '<div class="form-group">' +
         '<label>qb服务器地址</label>' +
-        `<input type="text" placeholder="如 192.168.1.1:8080" value="${GM_getValue('address')}" class="address form-control" required />` +
+        `<input type="text" placeholder="如 https://192.168.1.1:8080" value="${GM_getValue('address')}" class="address form-control" required />` +
         '<label>UserName</label>' +
         `<input type="text" placeholder="username" value="${GM_getValue('username')}" class="username form-control" required />` +
         '<label>Password</label>' +
@@ -170,7 +170,7 @@ function OpenConfig(){
                     }
                     GM_xmlhttpRequest({
                         method: 'post',
-                        url: `http://${address}/api/v2/auth/login`,
+                        url: `${address}/api/v2/auth/login`,
                         data: `username=${username}&password=${password}`,
                         headers: {"Content-Type": "application/x-www-form-urlencoded"},
                         onload: function(rec) {
@@ -186,7 +186,7 @@ function OpenConfig(){
                         },
                         timeout:5000,
                         ontimeout: function(){
-                            $.slert('连接超时');
+                            $.alert('连接超时');
                         }
                     });
                     return false;

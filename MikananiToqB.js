@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         AAM的qb扩展脚本
 // @namespace    http://tampermonkey.net/
-// @version      0.5.2
+// @version      0.5.3
 // @description  I want sleep I sole want sleep a nd I like sleep
 // @author       github/Abcuders
 // @supportURL   https://github.com/Abcuders/AutoAnimeMv
@@ -19,7 +19,7 @@
 // @icon         https://mikanani.me/images/mikan-pic.png
 // ==/UserScript==
 
-function addObserver(){
+function addAnimeItemObserver(){
     let item = document.querySelectorAll('div[class="row an-res-row-frame"]')
     console.log(item);
     for (var i=0;i<item.length;i++){
@@ -32,8 +32,23 @@ function addObserver(){
         DocumentObserverConfig = {
             childList: true,
         };
-        DocumentObserver.observe(mainArea, DocumentObserverConfig);
+        DocumentObserver.observe(mainArea, DocumentObserverConfig);    
     }
+}
+
+function addAnimePageObserver(){
+    item = document.querySelectorAll("div[id='sk-body']")
+    console.log(item);
+    mainArea = item[0];
+    console.log(mainArea);
+    MutationObserver = window.MutationObserver;
+    DocumentObserver = new MutationObserver( addAnimeItemObserver );
+        //if (mainArea.style['display'] == 'block'){
+        //});
+    DocumentObserverConfig = {
+        childList: true,
+    };
+    DocumentObserver.observe(mainArea, DocumentObserverConfig);
 }
 
 function Check(){
@@ -226,5 +241,6 @@ if (window.location.pathname != '/'){
     console.log(AnimeName);
     updata(AnimeName);
 }else {
-    addObserver();
+    addAnimePageObserver();
+    addAnimeItemObserver();
 }
